@@ -77,7 +77,7 @@ public class photonBallCombine : MonoBehaviour
                     GameObject ball = PhotonNetwork.Instantiate(objects[Mathf.Min(level, objects.Count - 1)].name, spawnLocation, Quaternion.identity); //dont index out of range
                     ball.GetComponent<photonBallCombine>().player = player;
 
-                    player.scoreAdd(Mathf.Min(level, objects.Count - 1) * 100);
+                    //player.scoreAdd(Mathf.Min(level, objects.Count - 1) * 100);
 
                     PhotonNetwork.Destroy(gameObject);
                 }

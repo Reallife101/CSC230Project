@@ -360,60 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ca299416cccc543b8a00ab70eec509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs:
-  - {fileID: 3118454096535605714, guid: 7d7d367458aef9c4b9f5ae1a6c3913c4, type: 3}
-  - {fileID: 3118454096535605714, guid: d9ef8c02d081f554b8e4773546c813a4, type: 3}
-  timeSlowCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -2.9489965
-      outSlope: -2.9489965
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.21888784
-      value: 0.3545005
-      inSlope: -2.1607947
-      outSlope: -2.1607947
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.3625
-      value: 0.15737946
-      inSlope: -0.6673743
-      outSlope: -0.6673743
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.42175445
-    - serializedVersion: 3
-      time: 0.6786397
-      value: 0.053337947
-      inSlope: -0.16913642
-      outSlope: -0.16913642
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.56736743
-      outWeight: 0.6109989
-    - serializedVersion: 3
-      time: 1.0041809
-      value: 0.002357483
-      inSlope: -0.15660219
-      outSlope: -0.15660219
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  playerPrefabs: {fileID: 3118454096535605714, guid: 0308dbe8c4f4391429586fddd7c3a6f4, type: 3}
   winScreen: {fileID: 1759246886301651769}
   LoseScreen: {fileID: 9086515149789659174}
 --- !u!114 &4303539636947826702

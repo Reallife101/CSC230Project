@@ -11,6 +11,8 @@ TagManager:
   - RightHinderance
   - LeftHinderance
   - ground
+  - Bullet
+  - spawn
   layers:
   - Default
   - TransparentFX

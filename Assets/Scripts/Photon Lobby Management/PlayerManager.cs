@@ -10,14 +10,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 {
     //Player manager will keep track of scoring, tarot cards, and respawning for the player (ie all data we want to persist past player death)
     private PhotonView PV;
-    public GameObject[] playerPrefabs;
-    private GameObject leftSpawn;
-    private GameObject rightSpawn;
+    public GameObject playerPrefabs;
 
     GameObject controller;
     photonPlayerController PlayerController;
-
-    [SerializeField] private AnimationCurve timeSlowCurve;
 
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject LoseScreen;
@@ -26,8 +22,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         
-        rightSpawn = GameObject.FindWithTag("RightSpawn");
-        leftSpawn = GameObject.FindWithTag("LeftSpawn");
         PV = GetComponent<PhotonView>();
 
     }
@@ -44,20 +38,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Spawn()
     {
 
-        Transform spawnPoint;
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            spawnPoint = leftSpawn.transform;
-        }
-        else
-        {
-            spawnPoint = rightSpawn.transform;
-        }
+        Transform spawnPoint = GameObject.FindGameObjectWithTag("spawn").transform;
 
 
         //0 if host
-        GameObject playerToSpawn = playerPrefabs[PhotonNetwork.IsMasterClient? 0 : 1];
+        GameObject playerToSpawn = playerPrefabs;
 
         controller = PhotonNetwork.Instantiate(playerToSpawn.name, spawnPoint.position, Quaternion.identity, 0, new object[] { PV.ViewID });
         
