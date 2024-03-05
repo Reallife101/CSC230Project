@@ -69,7 +69,7 @@ public class photonPlayerController : MonoBehaviour
     [PunRPC]
     void RPC_RecieveMessage(Dictionary<int, int> externalClock)
     {
-        clock.RecieveMessage(externalClock.Clock());
+        clock.RecieveMessage(externalClock);
     }
     
     public void loseGame()
