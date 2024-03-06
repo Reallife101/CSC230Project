@@ -45,6 +45,14 @@ public class photonPlayerController : MonoBehaviour
             return;
         }
 
+        if (Input.GetButtonDown(KeyCode.E)){ 
+            clock.Tick();
+        }
+
+        if (Input.GetButtonDown(KeyCode.A)){
+            photonView.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
+        }
+
     }
 
 
