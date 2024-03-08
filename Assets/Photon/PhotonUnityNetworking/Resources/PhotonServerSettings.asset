@@ -43,6 +43,9 @@ MonoBehaviour:
   - RPC_SpawnHinderance
   - RPC_SetScore
   - RPC_SpawnFlash
+  - RPC_AddClock
+  - RPC_RecieveMessage
+  - RPC_RemoveClock
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

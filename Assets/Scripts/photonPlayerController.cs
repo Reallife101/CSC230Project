@@ -61,6 +61,11 @@ public class photonPlayerController : MonoBehaviour
 
     }
 
+    public bool checkOwner()
+    {
+        return myPV.IsMine;
+    }
+
 
     [PunRPC]
     void RPC_SetScore(int sc)
@@ -82,6 +87,27 @@ public class photonPlayerController : MonoBehaviour
 
     [PunRPC]
     void RPC_RecieveMessage(Dictionary<int, int> externalClock)
+    {
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
+        Debug.Log("Length: "+gos.Length);
+        foreach (GameObject go in gos)
+        {
+            if (go != null)
+            {
+                photonPlayerController ppc = go.GetComponent<photonPlayerController>();
+
+                if (ppc.checkOwner())
+                {
+                    ppc.recieveMessage(externalClock);
+                }
+            }
+            
+
+        }
+        //clock.ReceiveMessage(externalClock);
+    }
+
+    public void recieveMessage(Dictionary<int, int> externalClock)
     {
         clock.ReceiveMessage(externalClock);
     }
