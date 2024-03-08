@@ -4,12 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using VectorClockNamespace;
 
 public class photonPlayerController : MonoBehaviour
 {
     //Components
     private PlayerManager myPM;
     private PhotonView myPV;
+    private VectorClock clock;
 
     [SerializeField]
     GameObject UICanvas;
@@ -30,6 +32,8 @@ public class photonPlayerController : MonoBehaviour
             //showNextUI();
 
         }
+
+        clock = new VectorClock(myPM.ID);
     }
 
 
@@ -41,6 +45,20 @@ public class photonPlayerController : MonoBehaviour
             return;
         }
 
+        if (Input.GetButtonDown(KeyCode.E)){ 
+            clock.Tick();
+        }
+
+        if (Input.GetButtonDown(KeyCode.A)){
+            clock.Tick();
+            myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
+        }
+
+        if (Input.GetButtonDown(KeyCode.P)){
+            clock.DisplayClock();
+            
+        }
+
     }
 
 
@@ -48,6 +66,24 @@ public class photonPlayerController : MonoBehaviour
     void RPC_SetScore(int sc)
     {
         //scoreText.text = "Score: " + sc;
+    }
+
+    [PunRPC]
+    void RPC_AddClock(int ID)
+    {
+        clock.Add(ID);
+    }
+
+    [PunRPC]
+    void RPC_RemoveClock(int ID)
+    {
+        clock.Remove(ID);
+    }
+
+    [PunRPC]
+    void RPC_RecieveMessage(Dictionary<int, int> externalClock)
+    {
+        clock.RecieveMessage(externalClock);
     }
     
     public void loseGame()
