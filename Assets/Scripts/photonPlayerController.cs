@@ -33,7 +33,7 @@ public class photonPlayerController : MonoBehaviour
 
         }
 
-        clock = new VectorClock(myPM.ID);
+        clock = new VectorClock(myPV.ViewID);
     }
 
 
@@ -45,16 +45,16 @@ public class photonPlayerController : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown(KeyCode.E)){ 
+        if (Input.GetKeyDown(KeyCode.E)){ 
             clock.Tick();
         }
 
-        if (Input.GetButtonDown(KeyCode.A)){
+        if (Input.GetKeyDown(KeyCode.A)){
             clock.Tick();
             myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
         }
 
-        if (Input.GetButtonDown(KeyCode.P)){
+        if (Input.GetKeyDown(KeyCode.P)){
             clock.DisplayClock();
             
         }
@@ -83,7 +83,7 @@ public class photonPlayerController : MonoBehaviour
     [PunRPC]
     void RPC_RecieveMessage(Dictionary<int, int> externalClock)
     {
-        clock.RecieveMessage(externalClock);
+        clock.ReceiveMessage(externalClock);
     }
     
     public void loseGame()
