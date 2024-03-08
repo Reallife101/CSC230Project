@@ -54,6 +54,11 @@ public class photonPlayerController : MonoBehaviour
             photonView.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
         }
 
+        if (Input.GetButtonDown(KeyCode.P)){
+            clock.DisplayClock();
+            
+        }
+
     }
 
 
