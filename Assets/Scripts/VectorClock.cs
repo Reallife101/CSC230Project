@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace VectorClockNamespace
 {
@@ -98,7 +99,7 @@ namespace VectorClockNamespace
         {
             foreach (var kvp in clock)
             {
-                Console.WriteLine($"Process {kvp.Key}: {kvp.Value}");
+                Debug.Log($"Process {kvp.Key}: {kvp.Value}");
             }
         }
     }
