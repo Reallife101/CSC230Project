@@ -71,6 +71,13 @@ public class photonPlayerController : MonoBehaviour
             StartCoroutine(setActionText("Action:Multicast"));
         }
 
+        if (Input.GetKeyDown(KeyCode.M)){
+            clock.Tick();
+            myPV.RPC("RPC_RecieveMessage", RpcTarget.MasterClient, clock.Clock());
+            printDisplay();
+            StartCoroutine(setActionText("Action:Master Client"));
+        }
+
         if (Input.GetKeyDown(KeyCode.P)){
             printDisplay();
             
@@ -131,7 +138,7 @@ public class photonPlayerController : MonoBehaviour
     public void randomDelay()
     {
         System.Random random = new System.Random();
-        int randomNumber = random.Next(200, 2001);
+        int randomNumber = random.Next(5000, 10001);
         delay = randomNumber;
 
     }
