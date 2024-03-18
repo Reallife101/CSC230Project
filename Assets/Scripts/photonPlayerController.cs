@@ -14,6 +14,7 @@ public class photonPlayerController : MonoBehaviour
     private PhotonView myPV;
     private VectorClock clock;
     private int delay;
+    private List<int> process_list;
 
     [SerializeField]
     GameObject UICanvas;
@@ -74,6 +75,11 @@ public class photonPlayerController : MonoBehaviour
             Debug.Log(delay);   
         }
 
+    }
+
+    public List<int> getProcessList()
+    {
+        return new List<int>(clock.Clock().Keys);
     }
 
     public bool checkOwner()
