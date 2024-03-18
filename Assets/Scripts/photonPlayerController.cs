@@ -66,6 +66,7 @@ public class photonPlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A)){
             clock.Tick();
+            WaitDelay();
             myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
             printDisplay();
             StartCoroutine(setActionText("Action:Multicast"));
@@ -73,6 +74,7 @@ public class photonPlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M)){
             clock.Tick();
+            WaitDelay();
             myPV.RPC("RPC_RecieveMessage", RpcTarget.MasterClient, clock.Clock());
             printDisplay();
             StartCoroutine(setActionText("Action:Master Client"));
@@ -185,7 +187,7 @@ public class photonPlayerController : MonoBehaviour
     [PunRPC]
     void RPC_RecieveMessage(Dictionary<int, int> externalClock)
     {
-        WaitDelay();
+        
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
         Debug.Log("Length: "+gos.Length);
         foreach (GameObject go in gos)
