@@ -22,6 +22,12 @@ public class photonPlayerController : MonoBehaviour
     [SerializeField]
     GameObject displayObject;
 
+    [SerializeField]
+    TMP_Text delayDisplay;
+
+    [SerializeField]
+    TMP_Text actionDisplay;
+
 
     private void Awake()
     {
@@ -54,48 +60,62 @@ public class photonPlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)){ 
             clock.Tick();
+            printDisplay();
+            StartCoroutine(setActionText("Action:Ticking Display"));
         }
 
         if (Input.GetKeyDown(KeyCode.A)){
             clock.Tick();
             myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
+            printDisplay();
+            StartCoroutine(setActionText("Action:Multicast"));
         }
 
         if (Input.GetKeyDown(KeyCode.P)){
-            List<string> st = clock.DisplayClock();
-            
-            //clear children
-            foreach (Transform go in UICanvas.transform)
-            {
-                Destroy(go.gameObject);
-            }
-
-            foreach(string s in st)
-            {
-                GameObject go = Instantiate(displayObject, UICanvas.transform);
-
-                processDisplay pd = go.GetComponent<processDisplay>();
-
-                if (pd != null)
-                {
-                    pd.setProcNum(s);
-                }
-            }
+            printDisplay();
             
         }
 
         if (Input.GetKeyDown(KeyCode.D)){
-            randomDelay();   
+            randomDelay();
+            delayDisplay.text = "Delay: " + delay;
+            StartCoroutine(setActionText("Action:Random Delay"));
         }
 
         if (Input.GetKeyDown(KeyCode.R)){
-            delay = 0;   
+            delay = 0;
+            delayDisplay.text = "Delay: " + delay;
+            StartCoroutine(setActionText("Action:Reset Delay"));
         }
 
         if (Input.GetKeyDown(KeyCode.T)){
-            Debug.Log(delay);   
+            Debug.Log(delay);
+            delayDisplay.text = "Delay: " + delay;
         }
 
+    }
+
+    public void printDisplay()
+    {
+        List<string> st = clock.DisplayClock();
+
+        //clear children
+        foreach (Transform go in UICanvas.transform)
+        {
+            Destroy(go.gameObject);
+        }
+
+        foreach (string s in st)
+        {
+            GameObject go = Instantiate(displayObject, UICanvas.transform);
+
+            processDisplay pd = go.GetComponent<processDisplay>();
+
+            if (pd != null)
+            {
+                pd.setProcNum(s);
+            }
+        }
     }
 
     public List<int> getProcessList()
@@ -177,15 +197,22 @@ public class photonPlayerController : MonoBehaviour
         }
         //clock.ReceiveMessage(externalClock);
     }
+    IEnumerator setActionText(string s)
+    {
+        actionDisplay.text = "";
+        yield return new WaitForSeconds(.25f);
+        actionDisplay.text = s;
+    }
 
-    
     public void addClock(int ID)
     {
         clock.Add(ID);
+        printDisplay();
     }
     public void recieveMessage(Dictionary<int, int> externalClock)
     {
         clock.ReceiveMessage(externalClock);
+        printDisplay();
     }
     
     public void loseGame()
