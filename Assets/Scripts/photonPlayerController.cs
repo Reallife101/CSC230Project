@@ -15,6 +15,7 @@ public class photonPlayerController : MonoBehaviour
     private VectorClock clock;
     private int delay;
     private List<int> process_list;
+    private GameObject[] allGameObjects;
 
     [SerializeField]
     GameObject UICanvas;
@@ -37,7 +38,12 @@ public class photonPlayerController : MonoBehaviour
         }
 
         clock = new VectorClock(myPV.ViewID);
+        myPV.RPC("RPC_AddClock", RpcTarget.Others, myPV.ViewID);
         delay = 0;
+        process_list = getProcessList();
+        allGameObjects = GameObject.FindGameObjectsWithTag("Game Manager");
+        Debug.Log("Length: "+allGameObjects.Length);
+        
     }
 
 
@@ -73,6 +79,33 @@ public class photonPlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T)){
             Debug.Log(delay);   
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)){
+            clock.Tick();
+            myPV.RPC("RPC_RecieveMessage", allGameObjects[0].GetComponent<PhotonView>().Owner, clock.Clock());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)){
+            if (allGameObjects.Length >= 2){
+                clock.Tick();
+                myPV.RPC("RPC_RecieveMessage", allGameObjects[1].GetComponent<PhotonView>().Owner, clock.Clock());
+            }
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)){
+            if (allGameObjects.Length >= 3){
+                clock.Tick();
+                myPV.RPC("RPC_RecieveMessage", allGameObjects[2].GetComponent<PhotonView>().Owner, clock.Clock());
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4)){
+            if (allGameObjects.Length >= 4){
+                clock.Tick();
+                myPV.RPC("RPC_RecieveMessage", allGameObjects[3].GetComponent<PhotonView>().Owner, clock.Clock());
+            }
         }
 
     }
@@ -111,7 +144,6 @@ public class photonPlayerController : MonoBehaviour
     void RPC_AddClock(int ID)
     {   
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
-        Debug.Log("Length: "+gos.Length);
         foreach (GameObject go in gos)
         {
             if (go != null)
