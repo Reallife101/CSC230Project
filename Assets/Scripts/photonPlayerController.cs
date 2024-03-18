@@ -109,8 +109,23 @@ public class photonPlayerController : MonoBehaviour
 
     [PunRPC]
     void RPC_AddClock(int ID)
-    {
-        clock.Add(ID);
+    {   
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
+        Debug.Log("Length: "+gos.Length);
+        foreach (GameObject go in gos)
+        {
+            if (go != null)
+            {
+                photonPlayerController ppc = go.GetComponent<photonPlayerController>();
+
+                if (ppc.checkOwner())
+                {
+                    ppc.addClock(ID);
+                }
+            }
+            
+
+        }
     }
 
     [PunRPC]
@@ -142,6 +157,11 @@ public class photonPlayerController : MonoBehaviour
         //clock.ReceiveMessage(externalClock);
     }
 
+    
+    public void addClock(int ID)
+    {
+        clock.Add(ID);
+    }
     public void recieveMessage(Dictionary<int, int> externalClock)
     {
         clock.ReceiveMessage(externalClock);
