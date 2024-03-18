@@ -109,13 +109,17 @@ namespace VectorClockNamespace
         }
 
         // Display the vector clock
-        public void DisplayClock()
+        public List<string> DisplayClock()
         {
+            List<string> st = new List<string>();
             Debug.Log("Total count of processes: "+clock.Count);
             foreach (var kvp in clock)
             {
                 Debug.Log($"Process {kvp.Key}: {kvp.Value}");
+                st.Add($"Process {kvp.Key}: {kvp.Value}");
             }
+
+            return st;
         }
     }
 }

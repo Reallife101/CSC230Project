@@ -19,6 +19,9 @@ public class photonPlayerController : MonoBehaviour
     [SerializeField]
     GameObject UICanvas;
 
+    [SerializeField]
+    GameObject displayObject;
+
 
     private void Awake()
     {
@@ -59,7 +62,25 @@ public class photonPlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.P)){
-            clock.DisplayClock();
+            List<string> st = clock.DisplayClock();
+            
+            //clear children
+            foreach (Transform go in UICanvas.transform)
+            {
+                Destroy(go.gameObject);
+            }
+
+            foreach(string s in st)
+            {
+                GameObject go = Instantiate(displayObject, UICanvas.transform);
+
+                processDisplay pd = go.GetComponent<processDisplay>();
+
+                if (pd != null)
+                {
+                    pd.setProcNum(s);
+                }
+            }
             
         }
 
