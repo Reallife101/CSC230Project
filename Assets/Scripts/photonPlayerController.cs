@@ -67,17 +67,20 @@ public class photonPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A)){
             clock.Tick();
             WaitDelay();
-            myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
             printDisplay();
             StartCoroutine(setActionText("Action:Multicast"));
+            StartCoroutine(waitMulticast());
+            
         }
 
         if (Input.GetKeyDown(KeyCode.M)){
             clock.Tick();
             WaitDelay();
-            myPV.RPC("RPC_RecieveMessage", RpcTarget.MasterClient, clock.Clock());
+            
             printDisplay();
             StartCoroutine(setActionText("Action:Master Client"));
+            StartCoroutine(waitMastercast());
+
         }
 
         if (Input.GetKeyDown(KeyCode.P)){
@@ -102,6 +105,18 @@ public class photonPlayerController : MonoBehaviour
             delayDisplay.text = "Delay: " + delay;
         }
 
+    }
+
+    IEnumerator waitMulticast()
+    {
+        yield return new WaitForSeconds(delay / 1000f);
+        myPV.RPC("RPC_RecieveMessage", RpcTarget.Others, clock.Clock());
+    }
+
+    IEnumerator waitMastercast()
+    {
+        yield return new WaitForSeconds(delay / 1000f);
+        myPV.RPC("RPC_RecieveMessage", RpcTarget.MasterClient, clock.Clock());
     }
 
     public void printDisplay()
