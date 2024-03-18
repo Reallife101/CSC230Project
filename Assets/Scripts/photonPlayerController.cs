@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using VectorClockNamespace;
+using System.Threading.Tasks;
 
 public class photonPlayerController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class photonPlayerController : MonoBehaviour
     private PlayerManager myPM;
     private PhotonView myPV;
     private VectorClock clock;
+    private int delay;
 
     [SerializeField]
     GameObject UICanvas;
@@ -34,6 +36,7 @@ public class photonPlayerController : MonoBehaviour
         }
 
         clock = new VectorClock(myPV.ViewID);
+        delay = 0;
     }
 
 
@@ -59,11 +62,36 @@ public class photonPlayerController : MonoBehaviour
             
         }
 
+        if (Input.GetKeyDown(KeyCode.D)){
+            randomDelay();   
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)){
+            delay = 0;   
+        }
+
+        if (Input.GetKeyDown(KeyCode.T)){
+            Debug.Log(delay);   
+        }
+
     }
 
     public bool checkOwner()
     {
         return myPV.IsMine;
+    }
+
+    public void randomDelay()
+    {
+        System.Random random = new System.Random();
+        int randomNumber = random.Next(200, 2001);
+        delay = randomNumber;
+
+    }
+
+    public async void WaitDelay()
+    {
+        await Task.Delay(delay);
     }
 
 
@@ -88,6 +116,7 @@ public class photonPlayerController : MonoBehaviour
     [PunRPC]
     void RPC_RecieveMessage(Dictionary<int, int> externalClock)
     {
+        WaitDelay();
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
         Debug.Log("Length: "+gos.Length);
         foreach (GameObject go in gos)
