@@ -213,7 +213,9 @@ public class photonPlayerController : MonoBehaviour
 
                 if (ppc.checkOwner())
                 {
+                    ppc.clock.Tick();
                     ppc.recieveMessage(externalClock);
+                    
                 }
             }
             
