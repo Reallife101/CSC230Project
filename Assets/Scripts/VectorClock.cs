@@ -57,24 +57,14 @@ namespace VectorClockNamespace
         {
             foreach (var kvp in externalClock)
             {
-                Debug.Log("Contain key?" + kvp.Key + " " + clock.ContainsKey(kvp.Key));
-                
                 if (!clock.ContainsKey(kvp.Key) || kvp.Value > clock[kvp.Key])
                 {
                     if (!clock.ContainsKey(kvp.Key))
                     {
                         clock.Add(kvp.Key, kvp.Value);
                     }
-                    
                     clock[kvp.Key] = kvp.Value;
-                    Debug.Log("After setting: " + clock[kvp.Key]);
-
                 }
-                else
-                {
-                    Debug.Log("Failed if: "+clock[kvp.Key]);
-                }
-                DisplayClock();
             }
         }
 
