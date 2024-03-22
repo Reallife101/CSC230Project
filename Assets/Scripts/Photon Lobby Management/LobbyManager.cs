@@ -86,7 +86,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // Creates a new room when there is text in roomInputField
         if (roomInputField.text.Length >= 1)
         {
-            PhotonNetwork.CreateRoom(roomInputField.text, new RoomOptions(){MaxPlayers = 2, BroadcastPropsChangeToAll = true, DeleteNullProperties = true});
+            PhotonNetwork.CreateRoom(roomInputField.text, new RoomOptions(){MaxPlayers = 4, BroadcastPropsChangeToAll = true, DeleteNullProperties = true});
         }
     }
 
