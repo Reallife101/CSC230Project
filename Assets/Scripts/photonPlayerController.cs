@@ -61,14 +61,14 @@ public class photonPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)){ 
             clock.Tick();
             printDisplay();
-            StartCoroutine(setActionText("Action:Ticking Display"));
+            StartCoroutine(setActionText("Action: Ticking Display"));
         }
 
         if (Input.GetKeyDown(KeyCode.A)){
             clock.Tick();
             WaitDelay();
             printDisplay();
-            StartCoroutine(setActionText("Action:Multicast"));
+            StartCoroutine(setActionText("Action: Multicast"));
             StartCoroutine(waitMulticast());
             
         }
@@ -78,7 +78,7 @@ public class photonPlayerController : MonoBehaviour
             WaitDelay();
             
             printDisplay();
-            StartCoroutine(setActionText("Action:Master Client"));
+            StartCoroutine(setActionText("Action: Master Client"));
             StartCoroutine(waitMastercast());
 
         }
@@ -91,13 +91,13 @@ public class photonPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D)){
             randomDelay();
             delayDisplay.text = "Delay: " + delay;
-            StartCoroutine(setActionText("Action:Random Delay"));
+            StartCoroutine(setActionText("Action: Random Delay"));
         }
 
         if (Input.GetKeyDown(KeyCode.R)){
             delay = 0;
             delayDisplay.text = "Delay: " + delay;
-            StartCoroutine(setActionText("Action:Reset Delay"));
+            StartCoroutine(setActionText("Action: Reset Delay"));
         }
 
         if (Input.GetKeyDown(KeyCode.T)){
@@ -205,6 +205,7 @@ public class photonPlayerController : MonoBehaviour
         
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Game Manager");
         Debug.Log("Length: "+gos.Length);
+        int clock_ID = clock.MyID();
         foreach (GameObject go in gos)
         {
             if (go != null)
@@ -214,6 +215,8 @@ public class photonPlayerController : MonoBehaviour
                 if (ppc.checkOwner())
                 {
                     ppc.clock.Tick();
+                    ppc.actionDisplay.text = "";
+                    ppc.actionDisplay.text = "Recieved Message from: " + clock_ID;
                     ppc.recieveMessage(externalClock);
                     
                 }
