@@ -88,7 +88,7 @@ namespace VectorClockNamespace
             {
                 if (!other.clock.ContainsKey(kvp.Key))
                 {
-                    return 0; // clocks are incomparable
+                    return 0; 
                 }
                 else if (kvp.Value > other.clock[kvp.Key])
                 {
@@ -101,11 +101,11 @@ namespace VectorClockNamespace
             }
 
             if (greater && !lesser)
-                return 1; // this clock is greater
+                return 1; 
             else if (!greater && lesser)
-                return -1; // this clock is lesser
+                return -1; 
             else
-                return 0; // clocks are concurrent
+                return 0; 
         }
 
         // Display the vector clock
